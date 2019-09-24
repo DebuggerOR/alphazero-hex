@@ -65,7 +65,9 @@ def evaluateModel(new_model, current_model, iteration):
         new_model.save('current_best_model.h5')
 
 def play_game(game, player1, player2, show=True):
-    """Plays a game then returns the final state."""
+    """
+    plays a game and returns the final state
+    """
     new_game_data = []
     while not game.isTerminal:
         if show:
@@ -94,7 +96,6 @@ def play_game(game, player1, player2, show=True):
         game = game.makeMove(m)
     if show:
         print(game, "\n")
-
         if game.winner != 0:
             print("player", print_char(game.winner), "(", end='')
             print((player1.name if game.winner == 1 else player2.name)+") wins")
@@ -117,9 +118,11 @@ def selfPlay(current_model, numGames, training_data):
         training_data+= new_training_data
     return training_data
 
+
 for i in range(10):
     training_data = []
     current_model = load_model('current_best_model.h5')
-    training_data = selfPlay(current_model, 100, training_data)
-    new_model = trainModel(current_model, training_data, i)
-    evaluateModel(new_model, current_model, i)
+    training_data = selfPlay(current_model,100,training_data)
+    new_model = trainModel(current_model,training_data,i)
+    evaluateModel(new_model,current_model,i)
+
